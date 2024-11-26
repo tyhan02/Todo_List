@@ -28,7 +28,7 @@ public class TodoService {
     private void validate(final TodoEntity entity){
 
        if (entity == null) {
-        log.warn("Entoty cannot be null");
+        log.warn("Entity cannot be null");
         throw new RuntimeException("Entity cannot be null");
 
     }
