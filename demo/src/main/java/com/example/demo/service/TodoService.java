@@ -27,6 +27,7 @@ public class TodoService {
         }
 
         repository.save(entity);
+
         log.info("Entity Id : {} is saved", entity.getId());
 
 
