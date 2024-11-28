@@ -7,6 +7,7 @@ import com.example.demo.model.TodoEntity;
 import com.example.demo.persistence.TodoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,6 +41,23 @@ public class TodoService {
 
     public List<TodoEntity> retrieve(final String userId){
         return repository.findByUserId(userId);
+    }
+
+    public List<TodoEntity> update(final TodoEntity entity){
+        //1. 저장할 엔티티가 유효한지 확인,
+        validate(entity);
+
+        //2. 넘겨받은 엔티티 id를 이용해 todoentity를 가져온다
+        final Optional<TodoEntity> original = repository.findById(entity.getId());
+
+        original.ifPresent(todo -> {
+            todo.setTitle(entity.getTitle());
+            todo.setDone(entity.isDone());
+
+            repository.save(todo);
+        });
+
+        return retrieve(entity.getUserId());
     }
 
 }
